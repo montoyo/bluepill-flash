@@ -11,7 +11,7 @@ make
 cd ..
 git clone https://github.com/montoyo/bluepill-flash.git
 cd bluepill-flash
-cmake -DMGPCL_INCLUDE_DIR=../mgpcl/include -DMGPCL_LIB_DIR=../mgpcl/build .
+cmake -DMGPCL_INCLUDE_DIR=../mgpcl/include -DMGPCL_LIBRARY_DIR=../mgpcl/build .
 make
 ```
 
