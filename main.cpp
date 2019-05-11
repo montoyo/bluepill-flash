@@ -263,7 +263,7 @@ FlashRetCode Flasher::main(int argc, char *argv[])
     m::ArgDescriptor &noPIDCheck = pargs.add("--no-pid-check", m::kAT_Switch).addAlias("-p").setHelpText("Disable PID checking");
     m::ArgDescriptor &baudRate   = pargs.add("--baud-rate", m::kAT_Single).addAlias("-s").setNumeric().setDefault(9600).setHelpText("Baud rate (default is 9600)");
     m::ArgDescriptor &helpSwitch = pargs.addHelpSwitch("--help").addAlias("-h").setHelpText("Shows this screen");
-    pargs.setHelpHeader("stm32-flash tool by Nicolas BARBOTIN\n====================================\nUsage: stm32-flash --device /dev/ttyDEV command1 command2 ...");
+    pargs.setHelpHeader("bluepill-flash tool by Nicolas BARBOTIN\n=======================================\nUsage: bluepill-flash --device /dev/ttyDEV command1 command2 ...");
     pargs.setHelpIgnoresRequirements(true);
     pargs.setAcceptsRemainingArgs(true);
 

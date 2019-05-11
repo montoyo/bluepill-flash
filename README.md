@@ -16,11 +16,11 @@ make
 ```
 
 ## Usage
-./stm32-flash [--options...] commands...
+./bluepill-flash [--options...] commands...
 
 Examples:
-* ./stm32-flash --device /dev/ttyACM0 write my_file.bin start
-* ./stm32-flash --device /dev/ttyACM0 --baud-rate 115200 go 0x8001234
+* ./bluepill-flash --device /dev/ttyACM0 write my_file.bin start
+* ./bluepill-flash --device /dev/ttyACM0 --baud-rate 115200 go 0x8001234
 
 ### Options
 * --device DEVICE is used to select the serial port (something like COM3 on Windows and /dev/ttyACM0 on Linux)
