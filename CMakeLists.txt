@@ -21,16 +21,32 @@ if(UNIX AND NOT MGPCL_NO_GUI)
     link_directories(${GTK3_LIBRARY_DIRS})
 endif()
 
+if(WIN32 AND NOT MGPCL_NO_SSL)
+	set(OPENSSL_INCLUDE_DIR "" CACHE PATH "Where the OpenSSL's include directory is located")
+	set(OPENSSL_LIBRARY_DIR "" CACHE PATH "Where the OpenSSL library is located")
+	include_directories(${OPENSSL_INCLUDE_DIR})
+	link_directories(${OPENSSL_LIBRARY_DIR})
+endif()
+
 # bluepill-flash settings
 set(SOURCE_FILES main.cpp)
 add_executable(bluepill-flash ${SOURCE_FILES})
 
 # MGPCL static libraries
-target_link_libraries(bluepill-flash mgpcl pthread)
+if(UNIX)
+	target_link_libraries(bluepill-flash mgpcl pthread)
+else()
+	target_link_libraries(bluepill-flash mgpcl ws2_32 Shlwapi Wbemuuid)
+endif()
 
 if(NOT MGPCL_NO_SSL)
     message(STATUS "Linking OpenSSL")
-    target_link_libraries(bluepill-flash crypto ssl)
+	
+	if(WIN32)
+		target_link_libraries(bluepill-flash libcrypto libssl crypt32)
+	else()
+		target_link_libraries(bluepill-flash crypto ssl)
+	endif()
 endif()
 
 if(UNIX AND NOT MGPCL_NO_GUI)
