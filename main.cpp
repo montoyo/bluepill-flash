@@ -391,17 +391,17 @@ FlashRetCode Flasher::main(int argc, char *argv[])
     }
 
     //Do what the user asked
-    for(int i = pargs.remainingArgsBegin(); i < argc; i++) {
-        const m::String action(argv[i]);
+    for(int i = pargs.remainingArgsBegin(); i < pargs.valueCount(); i++) {
+        const m::String &action = pargs.value(i).asString();
 
         if(action.equalsIgnoreCase("write")) {
-            if(i + 1 >= argc) {
+            if(i + 1 >= pargs.valueCount()) {
                 tos << "Missing input filename for \"write\" command" << m::eol;
                 return kRC_MissingCommandParam;
             }
 
             m::FileInputStream fis;
-            if(fis.open(argv[++i]) != m::FileInputStream::kOE_Success) {
+            if(fis.open(pargs.value(++i).asString()) != m::FileInputStream::kOE_Success) {
                 tos << "Failed to open input file." << m::eol;
                 return kRC_WriteInputFileOpenError;
             }
@@ -472,12 +472,12 @@ FlashRetCode Flasher::main(int argc, char *argv[])
             tos << "Starting program..." << m::eol;
             go(0x08000000U);
         } else if(action.equalsIgnoreCase("go")) {
-            if(i + 1 >= argc) {
+            if(i + 1 >= pargs.valueCount()) {
                 tos << "Missing address for \"go\" command" << m::eol;
                 return kRC_MissingCommandParam;
             }
 
-            m::String addrStr(argv[++i]);
+            m::String addrStr(pargs.value(++i).asString());
             uint32_t addr;
 
             if(addrStr.toLower().startsWith("0x"))
