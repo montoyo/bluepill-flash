@@ -306,6 +306,22 @@ FlashRetCode Flasher::main(int argc, char *argv[])
     sout = serial.outputStream<m::RefCounter>();
     sin = serial.inputStream<m::RefCounter>();
 
+#ifdef MGPCL_WIN
+    //This is required because for some reasons I can't figure out, SetCommState sends garbage (0xFF without parity bits)
+    //through serial when applying configuration (i.e. calling SetCommState)
+
+    m::console::setBackgroundColor(m::ConsoleColor::kCC_White);
+    m::console::setTextColor(m::ConsoleColor::kCC_Red);
+    tos << "!!! Windows workaround: please hit reset on the bluepill and then press any key here !!!" << m::eol;
+    m::console::resetColor();
+
+    {
+        m::STDInputStream is(m::STDHandle::HInput);
+        uint8_t tmp;
+        is.read(&tmp, 1);
+    }
+#endif
+
     //Connect
     writeByte(0x7F);
 
